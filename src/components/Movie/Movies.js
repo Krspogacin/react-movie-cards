@@ -10,8 +10,6 @@ export default class Movies extends Component {
     this.state = {
       movies: [],
     };
-
-    this.addNewElement = this.addNewElement.bind(this);
   }
 
   componentDidMount() {
@@ -30,8 +28,23 @@ export default class Movies extends Component {
   };
 
   deleteMovie = id => {
-    this.setState((prevState) => ({
-      movies: prevState.movies.filter((movie) => movie.id !== id)
+    this.setState(prevState => ({
+      movies: prevState.movies.filter(movie => movie.id !== id),
+    }));
+  };
+
+  starClick = (number, id) => {
+    const movies = this.state.movies;
+    const movieIndex = movies.findIndex(movie => movie.id === id);
+
+    movies[movieIndex].ratings.push(number);
+    let sum = 0;
+    movies[movieIndex].ratings.forEach(rating => {
+      sum += rating;
+    });
+    movies[movieIndex].rating = sum / movies[movieIndex].ratings.length;
+    this.setState(() => ({
+      movies: movies,
     }));
   };
 
@@ -43,7 +56,7 @@ export default class Movies extends Component {
         </div>
         <div className="d-flex flex-row">
           <div className="col-sm-12">
-            <MovieList movies={this.state.movies} removeItem={this.deleteMovie}/>
+            <MovieList movies={this.state.movies} removeItem={this.deleteMovie} starClick={this.starClick} />
           </div>
         </div>
       </div>

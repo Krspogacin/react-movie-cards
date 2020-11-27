@@ -28,6 +28,8 @@ class Form extends Component {
         title: this.state.title,
         subtitle: this.state.subtitle,
         description: this.state.description,
+        rating: 0,
+        ratings: [],
       };
       this.props.addItem(object);
       this.setState(prevState => {
