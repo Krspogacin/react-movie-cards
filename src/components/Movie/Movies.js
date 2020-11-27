@@ -5,7 +5,7 @@ import MovieService from '../../services/MovieService';
 import Form from './Form';
 
 export default class Movies extends Component {
-  constructor(props)  {
+  constructor(props) {
     super(props);
     this.state = {
       movies: [],
@@ -20,14 +20,20 @@ export default class Movies extends Component {
     }));
   }
 
-  addNewElement = (item) => {
+  addNewElement = item => {
     const newArray = this.state.movies.slice();
     newArray.push(item);
     this.setState(() => ({
       movies: newArray,
     }));
     console.log(newArray);
-  }
+  };
+
+  deleteMovie = id => {
+    this.setState((prevState) => ({
+      movies: prevState.movies.filter((movie) => movie.id !== id)
+    }));
+  };
 
   render() {
     return (
@@ -37,7 +43,7 @@ export default class Movies extends Component {
         </div>
         <div className="d-flex flex-row">
           <div className="col-sm-12">
-            <MovieList movies={this.state.movies} />
+            <MovieList movies={this.state.movies} removeItem={this.deleteMovie}/>
           </div>
         </div>
       </div>
